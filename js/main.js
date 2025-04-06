@@ -1,14 +1,10 @@
 // Haritayı başlat
-const map = L.map('map', {
-    minZoom: 2,
-    maxZoom: 8,
-    maxBounds: L.latLngBounds(L.latLng(-90, -180), L.latLng(90, 180)),
-    maxBoundsViscosity: 1.0
-}).setView([0, 0], 2);
+const map = L.map('map').setView([20, 0], 2);
 
-// OpenStreetMap katmanını ekle
+// Harita stilini ayarla
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
 }).addTo(map);
 
 // Harita kontrollerini ekle
@@ -60,27 +56,39 @@ window.onclick = function(event) {
     }
 }
 
-// Farklı renkler için renk paleti
-const colorPalette = [
-    '#FF5733', '#33FF57', '#3357FF', '#F033FF', '#FF3333', 
-    '#33FFF3', '#F3FF33', '#FF33A8', '#33A8FF', '#A833FF',
-    '#FF5733', '#33FF57', '#3357FF', '#F033FF', '#FF3333', 
-    '#33FFF3', '#F3FF33', '#FF33A8', '#33A8FF', '#A833FF'
+// Mat renk paleti
+const matteColors = [
+    '#E6D5AC', // Mat Bej
+    '#D4C4A1', // Mat Kahverengi
+    '#C2B3A1', // Mat Gri-Kahve
+    '#B1A3A1', // Mat Gri
+    '#A1B1C2', // Mat Mavi-Gri
+    '#A1C2D4', // Mat Açık Mavi
+    '#A1D4C2', // Mat Yeşil-Mavi
+    '#A1C2B1', // Mat Yeşil
+    '#B1C2A1', // Mat Açık Yeşil
+    '#C2D4A1', // Mat Sarı-Yeşil
+    '#D4C2A1', // Mat Sarı
+    '#E6D4A1', // Mat Altın
+    '#D4A1C2', // Mat Pembe
+    '#C2A1D4', // Mat Mor
+    '#A1A1C2'  // Mat Lavanta
 ];
 
-// Ülke verilerini yükle
+// Ülke sınırlarını ekle
 fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
     .then(response => response.json())
     .then(data => {
         L.geoJSON(data, {
             style: function(feature) {
+                // Her ülke için rastgele bir mat renk seç
+                const colorIndex = Math.floor(Math.random() * matteColors.length);
                 return {
-                    fillColor: '#3498db',
+                    fillColor: matteColors[colorIndex],
                     weight: 1,
                     opacity: 1,
-                    color: '#2980b9',
-                    dashArray: '',
-                    fillOpacity: 0.5
+                    color: '#999',
+                    fillOpacity: 0.8
                 };
             },
             onEachFeature: function(feature, layer) {
@@ -831,21 +839,4 @@ function getCountryCode(countryName) {
     };
     
     return countryCodes[countryName] || 'unknown';
-}
-
-// Hover efektleri için fonksiyonlar
-function highlightFeature(e) {
-    const layer = e.target;
-    layer.setStyle({
-        fillColor: '#e74c3c',
-        weight: 2,
-        color: '#c0392b',
-        dashArray: '',
-        fillOpacity: 0.8
-    });
-    layer.bringToFront();
-}
-
-function resetHighlight(e) {
-    geojson.resetStyle(e.target);
 } 
