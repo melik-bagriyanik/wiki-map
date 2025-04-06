@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dünya Haritası</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div id="countryModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="countryName"></h2>
+            
+            <div class="tabs">
+                <button class="tab-button active" data-tab="history">Tarih</button>
+                <button class="tab-button" data-tab="politics">Siyaset</button>
+                <button class="tab-button" data-tab="geography">Coğrafya</button>
+                <button class="tab-button" data-tab="economy">Ekonomi</button>
+            </div>
+            
+            <div class="tab-content">
+                <div id="history" class="tab-pane active">
+                    <div class="loading">Yükleniyor...</div>
+                </div>
+                <div id="politics" class="tab-pane">
+                    <div class="loading">Yükleniyor...</div>
+                </div>
+                <div id="geography" class="tab-pane">
+                    <div class="loading">Yükleniyor...</div>
+                </div>
+                <div id="economy" class="tab-pane">
+                    <div class="loading">Yükleniyor...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
